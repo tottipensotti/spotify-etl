@@ -3,6 +3,8 @@ import base64
 import requests
 from dotenv import load_dotenv
 from datetime import datetime
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
 
 # Load environment variables from .env
 load_dotenv()
@@ -10,6 +12,11 @@ load_dotenv()
 client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
 redirect_uri = os.getenv("SPOTIFY_REDIRECT_URI")
+
+spotify_auth = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
+                                                        client_secret=client_secret,
+                                                        redirect_uri=redirect_uri,
+                                                        scope='user-read-recently-played'))
 
 def getAccessToken():
     """
