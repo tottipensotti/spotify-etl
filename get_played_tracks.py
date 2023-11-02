@@ -12,53 +12,30 @@ load_dotenv()
 client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
 redirect_uri = os.getenv("SPOTIFY_REDIRECT_URI")
-
-spotify_auth = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
-                                                        client_secret=client_secret,
-                                                        redirect_uri=redirect_uri,
-                                                        scope='user-read-recently-played'))
+scope = 'user-read-recently-played'
 
 def getAccessToken():
     """
     Retrieves an access token for the Spotify API
-    using the user credentials from environment variables.
+    using Spotipy to the OAuth2.0 with user credentials from environment variables.
 
     Returns:
         str: The access token.
     """
-
-    auth_url = "https://accounts.spotify.com/api/token"
-    auth_params = {
-        'client_id': client_id,
-        'response_type': 'code',
-        'redirect_uri': redirect_uri,
-        'scope':'user-read-recently-played'
-    }
+    spotify_auth = SpotifyOAuth(client_id=client_id,
+                                client_secret=client_secret,
+                                redirect_uri=redirect_uri,
+                                scope=scope)
     
-    auth_response = requests.get('https://accounts.spotify.com/authorize', params=auth_params)
+    access_info = spotify_auth.get_cached_token()
 
-    if auth_response.status_code == 200:
-        
-        base64_auth = base64.b64encode(f'{client_id}:{client_secret}'.encode()).decode()
-
-    data = {
-        'grant_type': 'client_credentials'
-    }
-
-    headers = {
-        'Authorization': f'Basic {base64_auth}'
-    }
-
-    response = requests.post(auth_url, data=data, headers=headers)
-
-    if response.status_code == 200:
-        token_info = response.json()
-        access_token = token_info["access_token"]
-        return access_token
-    else:
-        print(f"Error: {response.status_code}")
+    if access_info is None:
+        print("No access token found.")
         return None
-    
+    else:
+        access_token = access_info["access_token"]
+        return access_token
+
 def getRecentlyPlayedTracks(access_token):
     """
     Retrieves data about user recently played tracks.
@@ -91,10 +68,6 @@ if __name__ == '__main__':
         played_songs = getRecentlyPlayedTracks(access_token)
 
         if played_songs:
-            for item in played_songs['items']:
-                track = item['track']
-                print(f'Track Name: {track["name"]}')
-                print(f'Artist: {", ".join([artist["name"] for artist in track["artists"]])}')
-                print(f'Album: {track["album"]["name"]}')
+            print('Success getting recently played tracks')
         else:
             print('Error getting recently played tracks')
