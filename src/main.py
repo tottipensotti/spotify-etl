@@ -1,5 +1,6 @@
 import pandas as pd
-from get_played_tracks import getAccessToken, getRecentlyPlayedTracks
+from etl.extract.spotify_api import getRecentlyPlayedTracks
+from utils.helper_functions import getAccessToken
 
 access_token = getAccessToken()
 played_songs = getRecentlyPlayedTracks(access_token)
@@ -14,4 +15,4 @@ played_songs = getRecentlyPlayedTracks(access_token)
 ### Create the dm_album table with: id, name, artist_id, album_type, release_date, total_tracks, available_markets, disc_number
 # def albums():
 
-### Create the dm_artist table with: id, name, tpye
+### Create the dm_artist table with: id, name, type
