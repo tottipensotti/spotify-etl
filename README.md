@@ -33,6 +33,4 @@ Before running the project, ensure that you have the following installed:
 
    ```bash
    pip install -r requirements.txt
-
-
 To be continued...
