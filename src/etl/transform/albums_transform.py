@@ -17,7 +17,7 @@ def transformTrackData(songs):
     columns=['id','name', 'artist_id', 'album_type', 'release_date',
     'total_tracks', 'available_markets','type']
 
-    def getArtists(album):
+    def getAlbumArtists(album):
         if len(album['artists']) > 1:
             return ', '.join([artist['name'] for artist in album['artists']])
         else:
@@ -28,7 +28,7 @@ def transformTrackData(songs):
             tracks.append([
                 songs['items'][i]['track']['album']['id'],
                 songs['items'][i]['track']['album']['name'],
-                getArtists(songs['items'][i]['track']['album']),
+                getAlbumArtists(songs['items'][i]['track']['album']),
                 songs['items'][i]['track']['album']['album_type'],
                 songs['items'][i]['track']['album']['release_date'],
                 songs['items'][i]['track']['album']['total_tracks'],
