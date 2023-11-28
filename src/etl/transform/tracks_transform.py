@@ -1,4 +1,3 @@
-import pandas as pd
 from pandas import DataFrame
 import sys
 import os
@@ -31,7 +30,7 @@ def transformTrackData(songs):
                 songs['items'][i]['track']['explicit'],
                 songs['items'][i]['track']['is_local']
             ])
-        dm_track = pd.DataFrame(tracks, columns=columns)
+        dm_track = DataFrame(tracks, columns=columns)
         print('Successfuly transformed tracks data')
         return dm_track
     except:

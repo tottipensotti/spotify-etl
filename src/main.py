@@ -1,4 +1,3 @@
-import pandas as pd
 from etl.extract.spotify_api import getRecentlyPlayedTracks
 from utils.helper_functions import getAccessToken
 

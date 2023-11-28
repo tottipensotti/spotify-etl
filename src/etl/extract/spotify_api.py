@@ -1,9 +1,4 @@
-import os
-import base64
 import requests
-from dotenv import load_dotenv
-from datetime import datetime
-import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
 def getRecentlyPlayedTracks(access_token):
