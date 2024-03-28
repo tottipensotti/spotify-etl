@@ -12,7 +12,7 @@ from etl.extract.spotify_api import getRecentlyPlayedTracks
 access_token = getAccessToken()
 songs = getRecentlyPlayedTracks(access_token)
 
-def transformArtistData(songs):
+def transformArtistData(songs: dict) -> DataFrame:
     artists_ids = set()
     columns = ['id', 'name', 'type','genres','popularity']
 

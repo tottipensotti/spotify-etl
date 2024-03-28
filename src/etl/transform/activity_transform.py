@@ -12,7 +12,7 @@ from etl.extract.spotify_api import getRecentlyPlayedTracks
 access_token = getAccessToken()
 songs = getRecentlyPlayedTracks(access_token)
 
-def transformActivityData(songs):
+def transformActivityData(songs: dict) -> DataFrame:
     activity=[]
     columns=['played_at','track_id','type']
     try:
